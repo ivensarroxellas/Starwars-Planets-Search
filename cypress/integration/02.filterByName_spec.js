@@ -13,7 +13,7 @@ import { INPUT_FILTER_NAME } from '../utils/dataTestIds';
 
 describe('2 - Crie um filtro de texto para a tabela', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/', {
+    cy.visit('http://localhost:3001/', {
       onBeforeLoad(win) {
         cy.stub(win, 'fetch').callsFake(mockFetch);
       },

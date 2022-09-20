@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import MyContext from './MyContext';
 
 const Provider = ({ children }) => {
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
   const [planets, setPlanets] = useState([]);
+  const [search, setSearch] = useState([]);
+  const [filteredByName, setFiltered] = useState({});
 
-  // Auxílio do Manoel Lima
-  async function fetchApi() {
+  // Auxílio do Philip Lages
+  useEffect(() => {
     setLoading(true);
-    const response = await fetch('https://swapi.dev/api/planets');
-    const result = await response.json();
-    const filteredResult = result.results.filter((planet) => delete planet.residents);
-    setPlanets(filteredResult);
+    fetch('https://swapi.dev/api/planets')
+      .then((response) => response.json())
+      .then((data) => setPlanets(data.results
+        .filter((planet) => delete planet.residents)));
     setLoading(false);
-  }
+  }, []);
+
+  const handleInput = (e) => {
+    const { value } = e.target;
+    setSearch(value);
+    setFiltered({ filteredByName: { name: value } });
+  };
+
+  const filteredPlanet = search.length > 0
+    ? planets.filter((planet) => (planet.name).toLowerCase().includes(search))
+    : planets;
 
   const context = {
     loading,
-    planets,
-    fetchApi,
+    handleInput,
+    search,
+    filteredPlanet,
+    filteredByName,
   };
 
   return (
