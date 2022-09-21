@@ -42,12 +42,7 @@ const Provider = ({ children }) => {
 
   function handleFilter() {
     const { planetInfo, comparisonInfo, valueInput } = filterByNumericValues;
-    console.log(planetInfo);
-    console.log(comparisonInfo);
-    console.log(valueInput);
-    console.log(planets[0]);
-    console.log(planets[2].population, 'populacao de Yavin IV');
-    console.log(planets[2].population === valueInput, 'são dados iguais');
+
     if (comparisonInfo === 'maior que') {
       setPlanets(planets
         .filter((planet) => Number(planet[planetInfo]) > Number(valueInput)));
