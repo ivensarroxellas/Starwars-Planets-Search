@@ -3,7 +3,7 @@ import MyContext from '../context/MyContext';
 
 function Filter() {
   const { handleInput, handleChange, search,
-    handleFilter, filterByNumericValues } = useContext(MyContext);
+    handleFilter, filterByNumericValues, optionsInfo } = useContext(MyContext);
 
   return (
     <>
@@ -18,13 +18,12 @@ function Filter() {
       <select
         name="planetInfo"
         data-testid="column-filter"
+        defaultValue={ optionsInfo[0] }
         onChange={ (e) => handleChange(e) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {optionsInfo.map((option, index) => (
+          <option key={ index } value={ option }>{option}</option>
+        ))}
       </select>
       <select
         name="comparisonInfo"

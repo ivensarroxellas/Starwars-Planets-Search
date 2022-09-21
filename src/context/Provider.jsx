@@ -8,11 +8,24 @@ const Provider = ({ children }) => {
   const [search, setSearch] = useState([]);
   const [searchnumber, setSearchNumber] = useState([]);
   const [filteredByName, setFiltered] = useState({});
+  const [optionsInfo, setOptionsInfo] = useState([
+    'population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [filterByNumericValues, setFilteredNumber] = useState({
     planetInfo: 'population',
     comparisonInfo: 'maior que',
     valueInput: 0,
   });
+
+  // Auxílio do Lucas Rodrigues
+  useEffect(() => {
+    setFiltered({
+      planetInfo: optionsInfo[0],
+      comparisonInfo: 'maior que',
+      valueInput: 0,
+    });
+  }, [optionsInfo]);
 
   // Auxílio do Philip Lages
   useEffect(() => {
@@ -44,17 +57,25 @@ const Provider = ({ children }) => {
     const { planetInfo, comparisonInfo, valueInput } = filterByNumericValues;
 
     if (comparisonInfo === 'maior que') {
+      console.log('alo');
+      console.log(planets);
+      console.log(valueInput);
       setPlanets(planets
         .filter((planet) => Number(planet[planetInfo]) > Number(valueInput)));
     }
     if (comparisonInfo === 'menor que') {
+      console.log('alo2');
       setPlanets(planets
         .filter((planet) => Number(planet[planetInfo]) < Number(valueInput)));
     }
     if (comparisonInfo === 'igual a') {
+      console.log('alo3');
       setPlanets(planets
         .filter((planet) => Number(planet[planetInfo]) === Number(valueInput)));
     }
+    const newColumArr = optionsInfo.filter((option) => option !== planetInfo);
+
+    setOptionsInfo(newColumArr);
   }
 
   const context = {
@@ -67,6 +88,7 @@ const Provider = ({ children }) => {
     filteredPlanet,
     filteredByName,
     filterByNumericValues,
+    optionsInfo,
   };
 
   return (
