@@ -57,9 +57,6 @@ const Provider = ({ children }) => {
     const { planetInfo, comparisonInfo, valueInput } = filterByNumericValues;
 
     if (comparisonInfo === 'maior que') {
-      console.log('alo');
-      console.log(planets);
-      console.log(valueInput);
       setPlanets(planets
         .filter((planet) => Number(planet[planetInfo]) > Number(valueInput)));
     }
