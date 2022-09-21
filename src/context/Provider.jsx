@@ -6,7 +6,13 @@ const Provider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [planets, setPlanets] = useState([]);
   const [search, setSearch] = useState([]);
+  const [searchnumber, setSearchNumber] = useState([]);
   const [filteredByName, setFiltered] = useState({});
+  const [filterByNumericValues, setFilteredNumber] = useState({
+    planetInfo: 'population',
+    comparisonInfo: 'maior que',
+    valueInput: 0,
+  });
 
   // Auxílio do Philip Lages
   useEffect(() => {
@@ -24,16 +30,48 @@ const Provider = ({ children }) => {
     setFiltered({ filteredByName: { name: value } });
   };
 
+  const handleChange = (e) => {
+    const { value, name } = e.target;
+    setSearchNumber(value);
+    setFilteredNumber({ ...filterByNumericValues, [name]: value });
+  };
+
   const filteredPlanet = search.length > 0
     ? planets.filter((planet) => (planet.name).toLowerCase().includes(search))
     : planets;
 
+  function handleFilter() {
+    const { planetInfo, comparisonInfo, valueInput } = filterByNumericValues;
+    console.log(planetInfo);
+    console.log(comparisonInfo);
+    console.log(valueInput);
+    console.log(planets[0]);
+    console.log(planets[2].population, 'populacao de Yavin IV');
+    console.log(planets[2].population === valueInput, 'são dados iguais');
+    if (comparisonInfo === 'maior que') {
+      setPlanets(planets
+        .filter((planet) => Number(planet[planetInfo]) > Number(valueInput)));
+    }
+    if (comparisonInfo === 'menor que') {
+      setPlanets(planets
+        .filter((planet) => Number(planet[planetInfo]) < Number(valueInput)));
+    }
+    if (comparisonInfo === 'igual a') {
+      setPlanets(planets
+        .filter((planet) => Number(planet[planetInfo]) === Number(valueInput)));
+    }
+  }
+
   const context = {
     loading,
     handleInput,
+    handleChange,
+    handleFilter,
     search,
+    searchnumber,
     filteredPlanet,
     filteredByName,
+    filterByNumericValues,
   };
 
   return (
