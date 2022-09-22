@@ -9,7 +9,7 @@ function Tabela() {
   return (
     <>
       <Filter />
-      { loading ? <h1>Carregando...</h1> : ((
+      { loading ? <p>Carregando...</p> : ((
         <table>
           <thead>
             <tr>
