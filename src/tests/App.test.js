@@ -4,7 +4,7 @@ import App from '../App';
 import  testData  from './mock.js';
 import userEvent from '@testing-library/user-event';
 
-
+//Auxílio do Pedro Ayres
 describe('StarWars Project Tests', () => {
   beforeEach( async ()=> {
     jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
